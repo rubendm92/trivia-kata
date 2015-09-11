@@ -28,6 +28,15 @@ exports.Game = function() {
     console.log(players[currentPlayer] + " now has " + purses[currentPlayer]++  + " Gold Coins.");
   };
 
+  var canGetOutOfPenaltyBox = function(roll) {
+    return roll % 2 != 0;
+  };
+
+  var leavePenaltyBox = function() {
+    isGettingOutOfPenaltyBox = true;
+    console.log(players[currentPlayer] + " is getting out of the penalty box");
+  };
+
   this.isPlayable = function(howManyPlayers) {
     return howManyPlayers >= 2;
   };
@@ -53,31 +62,17 @@ exports.Game = function() {
     console.log("They have rolled a " + roll);
 
     if(inPenaltyBox[currentPlayer]) {
-      if(roll % 2 != 0) {
-        isGettingOutOfPenaltyBox = true;
-
-        console.log(players[currentPlayer] + " is getting out of the penalty box");
-        places[currentPlayer] = places[currentPlayer] + roll;
-        if(places[currentPlayer] > 11) {
-          places[currentPlayer] = places[currentPlayer] - 12;
-        }
-
-        console.log(players[currentPlayer] + "'s new location is " + places[currentPlayer]);
-        questions.askQuestionForPlace(currentPlayerPosition());
-      }else{
+      if(!canGetOutOfPenaltyBox(roll)) {
         console.log(players[currentPlayer] + " is not getting out of the penalty box");
         isGettingOutOfPenaltyBox = false;
-      }
-    }else{
-
-      places[currentPlayer] = places[currentPlayer] + roll;
-      if(places[currentPlayer] > 11) {
-        places[currentPlayer] = places[currentPlayer] - 12;
-      }
-
-      console.log(players[currentPlayer] + "'s new location is " + places[currentPlayer]);
-      questions.askQuestionForPlace(currentPlayerPosition());
+        return;
+      }else
+        leavePenaltyBox();
     }
+    places[currentPlayer] = (places[currentPlayer] + roll) % 12;
+
+    console.log(players[currentPlayer] + "'s new location is " + places[currentPlayer]);
+    questions.askQuestionForPlace(currentPlayerPosition());
   };
 
   this.wasCorrectlyAnswered = function() {

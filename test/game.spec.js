@@ -112,4 +112,20 @@ describe("An accepted trivia game", function() {
       game.roll(1);
     }
   });
+
+  it("should print new location for player after rolling", function () {
+    game.add("Ruben");
+    var printedValues = [];
+    console.log = function(content) {
+      printedValues.push(content);
+    };
+    game.roll(2);
+    expect(printedValues[2]).toBe("Ruben's new location is 2");
+    game.roll(2);
+    expect(printedValues[6]).toBe("Ruben's new location is 4");
+    game.roll(6);
+    expect(printedValues[10]).toBe("Ruben's new location is 10");
+    game.roll(6);
+    expect(printedValues[14]).toBe("Ruben's new location is 4");
+  });
 });
