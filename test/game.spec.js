@@ -8,4 +8,16 @@ describe("An accepted trivia game", function() {
     game.add("Ruben");
     expect(game.wasCorrectlyAnswered()).toBe(true);
   });
+
+  it("should return false when player answers question correctly and won the game by answering correctly six questions", function () {
+    var game = new Game();
+    game.add("Ruben");
+    firstFiveCallsReturnTrue();
+    expect(game.wasCorrectlyAnswered()).toBe(false);
+
+    function firstFiveCallsReturnTrue() {
+      for (var i = 0; i < 5; i++)
+        expect(game.wasCorrectlyAnswered()).toBe(true);
+    }
+  });
 });
