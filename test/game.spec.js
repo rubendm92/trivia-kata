@@ -1,4 +1,5 @@
-require('./game.js');
+require('../src/game.js');
+const expect = require('expect');
 
 describe("The test environment", function() {
   it("should pass", function() {
@@ -6,7 +7,7 @@ describe("The test environment", function() {
   });
 
   it("should access game", function() {
-    expect(Game).toBeDefined();
+    expect(Game).toExist();
   });
 });
 

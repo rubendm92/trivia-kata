@@ -1,0 +1,22 @@
+{
+  "name": "trivia-kata",
+  "version": "1.0.0",
+  "description": "Legacy code kata from https://github.com/jbrains/trivia",
+  "main": "index.js",
+  "directories": {
+    "test": "test"
+  },
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "github.com/rubendm92/trivia-kata"
+  },
+  "author": "Rubén Díaz Martínez",
+  "license": "ISC",
+  "devDependencies": {
+    "expect": "^1.10.0",
+    "jasmine-node": "^1.14.5"
+  }
+}
