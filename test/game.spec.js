@@ -1,16 +1,11 @@
 require('../src/game.js');
 const expect = require('expect');
 
-describe("The test environment", function() {
-  it("should pass", function() {
-    expect(true).toBe(true);
-  });
+describe("An accepted trivia game", function() {
 
-  it("should access game", function() {
-    expect(Game).toExist();
+  it("should return true when player answers question correctly but did not win the game", function() {
+    var game = new Game();
+    game.add("Ruben");
+    expect(game.wasCorrectlyAnswered()).toBe(true);
   });
-});
-
-describe("Your specs...", function() {
-  // it ...
 });
