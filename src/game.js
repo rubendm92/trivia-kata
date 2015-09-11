@@ -1,17 +1,11 @@
 exports = typeof window !== "undefined" && window !== null ? window : global;
 
 exports.Game = function() {
-  const questionCategories = ["Pop", "Science", "Sports", "Rock"];
+  const questions = {Pop: [], Science: [], Sports: [], Rock: []};
   var players          = [];
   var places           = new Array(6);
   var purses           = new Array(6);
   var inPenaltyBox     = new Array(6);
-
-  var popQuestions     = [];
-  var scienceQuestions = [];
-  var sportsQuestions  = [];
-  var rockQuestions    = [];
-  var questions = {Pop: popQuestions, Science: scienceQuestions, Sports: sportsQuestions, Rock: rockQuestions};
 
   var currentPlayer    = 0;
   var isGettingOutOfPenaltyBox = false;
@@ -21,22 +15,18 @@ exports.Game = function() {
   };
 
   var currentCategory = function() {
-    return questionCategories[currentPlayerPosition() % questionCategories.length];
+    return Object.keys(questions)[currentPlayerPosition() % Object.keys(questions).length];
   };
 
   var currentPlayerPosition = function() {
     return places[currentPlayer];
   }
 
-  this.createRockQuestion = function(index){
-    return "Rock Question "+index;
-  };
-
   for(var i = 0; i < 50; i++){
-    popQuestions.push("Pop Question "+i);
-    scienceQuestions.push("Science Question "+i);
-    sportsQuestions.push("Sports Question "+i);
-    rockQuestions.push(this.createRockQuestion(i));
+    questions.Pop.push("Pop Question " + i);
+    questions.Science.push("Science Question " + i);
+    questions.Sports.push("Sports Question " + i);
+    questions.Rock.push("Rock Question " + i);
   };
 
   this.isPlayable = function(howManyPlayers){
@@ -58,7 +48,6 @@ exports.Game = function() {
   this.howManyPlayers = function(){
     return players.length;
   };
-
 
   var askQuestion = function(){
     console.log(questions[currentCategory()].shift());
