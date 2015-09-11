@@ -43,10 +43,6 @@ exports.Game = function() {
     return players.length;
   };
 
-  var askQuestion = function() {
-    console.log(questions.forPlace(currentPlayerPosition()));
-  };
-
   this.roll = function(roll) {
     console.log(players[currentPlayer] + " is the current player");
     console.log("They have rolled a " + roll);
@@ -62,8 +58,7 @@ exports.Game = function() {
         }
 
         console.log(players[currentPlayer] + "'s new location is " + places[currentPlayer]);
-        console.log("The category is " + questions.categoryForPlace(currentPlayerPosition()));
-        askQuestion();
+        questions.askQuestionForPlace(currentPlayerPosition());
       }else{
         console.log(players[currentPlayer] + " is not getting out of the penalty box");
         isGettingOutOfPenaltyBox = false;
@@ -76,8 +71,7 @@ exports.Game = function() {
       }
 
       console.log(players[currentPlayer] + "'s new location is " + places[currentPlayer]);
-      console.log("The category is " + questions.categoryForPlace(currentPlayerPosition()));
-      askQuestion();
+      questions.askQuestionForPlace(currentPlayerPosition());
     }
   };
 
