@@ -39,6 +39,11 @@ exports.Game = function() {
     console.log(players[currentPlayer] + " is getting out of the penalty box");
   };
 
+  var updatePlayerPosition = function(roll) {
+    places[currentPlayer] = (places[currentPlayer] + roll) % numberOfPlaces;
+    console.log(players[currentPlayer] + "'s new location is " + places[currentPlayer]);
+  };
+
   this.isPlayable = function(howManyPlayers) {
     return howManyPlayers >= 2;
   };
@@ -71,9 +76,7 @@ exports.Game = function() {
       }else
         leavePenaltyBox();
     }
-    places[currentPlayer] = (places[currentPlayer] + roll) % numberOfPlaces;
-
-    console.log(players[currentPlayer] + "'s new location is " + places[currentPlayer]);
+    updatePlayerPosition(roll);
     questions.askQuestionForPlace(currentPlayerPosition());
   };
 
