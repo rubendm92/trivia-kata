@@ -79,4 +79,17 @@ describe("An accepted trivia game", function() {
       game.roll(2);
     }
   });
+
+  it("should change player when question is answered", function () {
+    game.add("Ruben");
+    game.add("Belen");
+    var printedValues = [];
+    console.log = function(content) {
+      printedValues.push(content);
+    };
+    game.wrongAnswer();
+    game.wrongAnswer();
+    expect(printedValues[1]).toBe("Ruben was sent to the penalty box");
+    expect(printedValues[3]).toBe("Belen was sent to the penalty box");
+  });
 });
