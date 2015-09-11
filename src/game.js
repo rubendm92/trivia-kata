@@ -2,17 +2,19 @@ exports = typeof window !== "undefined" && window !== null ? window : global;
 require('./QuestionFactory.js');
 
 exports.Game = function() {
+  const pursesToWin = 6;
+  const numberOfPlaces = 12;
   var players = [];
-  var places = new Array(6);
-  var purses = new Array(6);
-  var inPenaltyBox = new Array(6);
+  var places = [];
+  var purses = [];
+  var inPenaltyBox = [];
   var questions = questionFactory();
 
   var currentPlayer = 0;
   var isGettingOutOfPenaltyBox = false;
 
   var didPlayerWin = function() {
-    return !(purses[currentPlayer] == 6)
+    return !(purses[currentPlayer] == pursesToWin)
   };
 
   var currentPlayerPosition = function() {
@@ -69,7 +71,7 @@ exports.Game = function() {
       }else
         leavePenaltyBox();
     }
-    places[currentPlayer] = (places[currentPlayer] + roll) % 12;
+    places[currentPlayer] = (places[currentPlayer] + roll) % numberOfPlaces;
 
     console.log(players[currentPlayer] + "'s new location is " + places[currentPlayer]);
     questions.askQuestionForPlace(currentPlayerPosition());
