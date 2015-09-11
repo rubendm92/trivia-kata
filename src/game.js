@@ -1,6 +1,7 @@
 exports = typeof window !== "undefined" && window !== null ? window : global;
 
 exports.Game = function() {
+  const questionCategories = ["Pop", "Science", "Sports", "Rock"];
   var players          = [];
   var places           = new Array(6);
   var purses           = new Array(6);
@@ -18,27 +19,13 @@ exports.Game = function() {
     return !(purses[currentPlayer] == 6)
   };
 
-  var currentCategory = function(){
-    if(places[currentPlayer] == 0)
-      return 'Pop';
-    if(places[currentPlayer] == 4)
-      return 'Pop';
-    if(places[currentPlayer] == 8)
-      return 'Pop';
-    if(places[currentPlayer] == 1)
-      return 'Science';
-    if(places[currentPlayer] == 5)
-      return 'Science';
-    if(places[currentPlayer] == 9)
-      return 'Science';
-    if(places[currentPlayer] == 2)
-      return 'Sports';
-    if(places[currentPlayer] == 6)
-      return 'Sports';
-    if(places[currentPlayer] == 10)
-      return 'Sports';
-    return 'Rock';
+  var currentCategory = function() {
+    return questionCategories[currentPlayerPosition() % questionCategories.length];
   };
+
+  var currentPlayerPosition = function() {
+    return places[currentPlayer];
+  }
 
   this.createRockQuestion = function(index){
     return "Rock Question "+index;
