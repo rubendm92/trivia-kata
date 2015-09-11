@@ -32,4 +32,18 @@ describe("An accepted trivia game", function() {
     expect(printedValues[0]).toBe("Ruben was added");
     expect(printedValues[1]).toBe("They are player number 1");
   });
+
+  it("should print question category", function () {
+    var printedValues = [];
+    console.log = function(content) {
+      printedValues.push(content);
+    };
+    var game = new Game();
+    game.add("Ruben");
+    var categories = ["Pop", "Science", "Sports", "Rock"];
+    for (var i = 1; i < 13; i++) {
+      game.roll(1);
+      expect(printedValues[5 * i]).toBe("The category is " + categories[i % 4]);
+    }
+  });
 });
