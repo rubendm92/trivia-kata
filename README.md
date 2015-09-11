@@ -1,12 +1,4 @@
-Test with node.js
+Trivia Kata
 =====================
 
-Install the jasmine-node plugin from https://github.com/mhevery/jasmine-node
-
-	npm install jasmine-node -g
-
-And execute:
-
-	jasmine-node .
-
-Any test source matching the pattern *.spec.js will be executed.
+This is my solution (for the moment) for the trivia kata proposed by https://github.com/jbrains/trivia in Javascript
