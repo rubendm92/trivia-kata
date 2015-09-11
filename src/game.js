@@ -1,11 +1,12 @@
 exports = typeof window !== "undefined" && window !== null ? window : global;
+require('./QuestionFactory.js');
 
 exports.Game = function() {
-  const questions = {Pop: [], Science: [], Sports: [], Rock: []};
   var players          = [];
   var places           = new Array(6);
   var purses           = new Array(6);
   var inPenaltyBox     = new Array(6);
+  var questions = questionFactory();
 
   var currentPlayer    = 0;
   var isGettingOutOfPenaltyBox = false;
@@ -14,20 +15,9 @@ exports.Game = function() {
     return !(purses[currentPlayer] == 6)
   };
 
-  var currentCategory = function() {
-    return Object.keys(questions)[currentPlayerPosition() % Object.keys(questions).length];
-  };
-
   var currentPlayerPosition = function() {
     return places[currentPlayer];
   }
-
-  for(var i = 0; i < 50; i++){
-    questions.Pop.push("Pop Question " + i);
-    questions.Science.push("Science Question " + i);
-    questions.Sports.push("Sports Question " + i);
-    questions.Rock.push("Rock Question " + i);
-  };
 
   this.isPlayable = function(howManyPlayers){
     return howManyPlayers >= 2;
@@ -50,7 +40,7 @@ exports.Game = function() {
   };
 
   var askQuestion = function(){
-    console.log(questions[currentCategory()].shift());
+    console.log(questions.forPlace(currentPlayerPosition()));
   };
 
   this.roll = function(roll){
@@ -68,7 +58,7 @@ exports.Game = function() {
         }
 
         console.log(players[currentPlayer] + "'s new location is " + places[currentPlayer]);
-        console.log("The category is " + currentCategory());
+        console.log("The category is " + questions.categoryForPlace(currentPlayerPosition()));
         askQuestion();
       }else{
         console.log(players[currentPlayer] + " is not getting out of the penalty box");
@@ -82,7 +72,7 @@ exports.Game = function() {
       }
 
       console.log(players[currentPlayer] + "'s new location is " + places[currentPlayer]);
-      console.log("The category is " + currentCategory());
+      console.log("The category is " + questions.categoryForPlace(currentPlayerPosition()));
       askQuestion();
     }
   };

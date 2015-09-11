@@ -34,33 +34,4 @@ describe("An accepted trivia game", function() {
     expect(printedValues[0]).toBe("Ruben was added");
     expect(printedValues[1]).toBe("They are player number 1");
   });
-
-  it("should print question category", function () {
-    var printedValues = [];
-    console.log = function(content) {
-      printedValues.push(content);
-    };
-    game.add("Ruben");
-    var categories = ["Pop", "Science", "Sports", "Rock"];
-    for (var i = 1; i < 13; i++) {
-      game.roll(1);
-      expect(printedValues[5 * i]).toBe("The category is " + categories[i % 4]);
-    }
-  });
-
-  it("should print question to ask", function () {
-    var printedValues = [];
-    console.log = function(content) {
-      printedValues.push(content);
-    };
-    game.add("Ruben");
-    game.roll(1);
-    expect(printedValues[6]).toBe("Science Question 0");
-    game.roll(1);
-    expect(printedValues[11]).toBe("Sports Question 0");
-    game.roll(1);
-    expect(printedValues[16]).toBe("Rock Question 0");
-    game.roll(1);
-    expect(printedValues[21]).toBe("Pop Question 0");
-  });
 });
