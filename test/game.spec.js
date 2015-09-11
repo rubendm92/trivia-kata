@@ -46,4 +46,22 @@ describe("An accepted trivia game", function() {
       expect(printedValues[5 * i]).toBe("The category is " + categories[i % 4]);
     }
   });
+
+  it("should print question to ask", function () {
+    var printedValues = [];
+    console.log = function(content) {
+      printedValues.push(content);
+    };
+    var game = new Game();
+    game.add("Ruben");
+    var categories = ["Pop", "Science", "Sports", "Rock"];
+    game.roll(1);
+    expect(printedValues[6]).toBe("Science Question 0");
+    game.roll(1);
+    expect(printedValues[11]).toBe("Sports Question 0");
+    game.roll(1);
+    expect(printedValues[16]).toBe("Rock Question 0");
+    game.roll(1);
+    expect(printedValues[21]).toBe("Pop Question 0");
+  });
 });
