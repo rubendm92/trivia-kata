@@ -15,9 +15,21 @@ describe("An accepted trivia game", function() {
     firstFiveCallsReturnTrue();
     expect(game.wasCorrectlyAnswered()).toBe(false);
 
+
     function firstFiveCallsReturnTrue() {
       for (var i = 0; i < 5; i++)
         expect(game.wasCorrectlyAnswered()).toBe(true);
     }
+  });
+
+  it("should return true when player is added and print in console name of player and number of players", function () {
+    var printedValues = [];
+    console.log = function(content) {
+      printedValues.push(content);
+    };
+    var game = new Game();
+    expect(game.add("Ruben")).toBe(true);
+    expect(printedValues[0]).toBe("Ruben was added");
+    expect(printedValues[1]).toBe("They are player number 1");
   });
 });
