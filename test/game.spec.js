@@ -35,6 +35,19 @@ describe("An accepted trivia game", function() {
     expect(printedValues[1]).toBe("They are player number 1");
   });
 
+  it("should change player when question is answered", function () {
+    game.add("Ruben");
+    game.add("Belen");
+    var printedValues = [];
+    console.log = function(content) {
+      printedValues.push(content);
+    };
+    game.wrongAnswer();
+    game.wrongAnswer();
+    expect(printedValues[1]).toBe("Ruben was sent to the penalty box");
+    expect(printedValues[3]).toBe("Belen was sent to the penalty box");
+  });
+
   it("should send player to penalty box when fails a question", function () {
     game.add("Ruben");
     var printedValues = [];
@@ -80,16 +93,23 @@ describe("An accepted trivia game", function() {
     }
   });
 
-  it("should change player when question is answered", function () {
+  it("should let player leave penalty box if roll value is not pair", function () {
     game.add("Ruben");
-    game.add("Belen");
+    playerFallsInPenaltyBox();
     var printedValues = [];
     console.log = function(content) {
       printedValues.push(content);
     };
-    game.wrongAnswer();
-    game.wrongAnswer();
-    expect(printedValues[1]).toBe("Ruben was sent to the penalty box");
-    expect(printedValues[3]).toBe("Belen was sent to the penalty box");
+    playerLeavesPenaltyBox();
+    expect(game.wasCorrectlyAnswered()).toBe(true);
+    expect(printedValues[2]).toBe("Ruben is getting out of the penalty box");
+
+    function playerFallsInPenaltyBox() {
+      game.wrongAnswer();
+    }
+
+    function playerLeavesPenaltyBox() {
+      game.roll(1);
+    }
   });
 });
