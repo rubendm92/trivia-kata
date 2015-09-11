@@ -17,11 +17,16 @@ exports.Game = function() {
 
   var currentPlayerPosition = function() {
     return places[currentPlayer];
-  }
+  };
 
   var nextPlayer = function() {
     currentPlayer = (currentPlayer + 1) % players.length;
-  }
+  };
+
+  var printQuestionWasCorrectlyAnswer = function() {
+    console.log("Answer was correct!!!!");
+    console.log(players[currentPlayer] + " now has " + purses[currentPlayer]++  + " Gold Coins.");
+  };
 
   this.isPlayable = function(howManyPlayers) {
     return howManyPlayers >= 2;
@@ -76,35 +81,14 @@ exports.Game = function() {
   };
 
   this.wasCorrectlyAnswered = function() {
-    if(inPenaltyBox[currentPlayer]) {
-      if(isGettingOutOfPenaltyBox) {
-        console.log('Answer was correct!!!!');
-        purses[currentPlayer] += 1;
-        console.log(players[currentPlayer] + " now has " +
-                    purses[currentPlayer]  + " Gold Coins.");
-
-        var winner = didPlayerWin();
-        nextPlayer();
-        return winner;
-      }else{
-        nextPlayer();
-        return true;
-      }
-
-
-
-    }else{
-
-      console.log("Answer was correct!!!!");
-
-      purses[currentPlayer] += 1;
-      console.log(players[currentPlayer] + " now has " +
-                  purses[currentPlayer]  + " Gold Coins.");
-
-      var winner = didPlayerWin();
+    if(inPenaltyBox[currentPlayer] && !isGettingOutOfPenaltyBox) {
       nextPlayer();
-      return winner;
+      return true;
     }
+    printQuestionWasCorrectlyAnswer();
+    var winner = didPlayerWin();
+    nextPlayer();
+    return winner;
   };
 
   this.wrongAnswer = function() {
