@@ -11,6 +11,7 @@ exports.Game = function() {
   var scienceQuestions = [];
   var sportsQuestions  = [];
   var rockQuestions    = [];
+  var questions = {Pop: popQuestions, Science: scienceQuestions, Sports: sportsQuestions, Rock: rockQuestions};
 
   var currentPlayer    = 0;
   var isGettingOutOfPenaltyBox = false;
@@ -60,14 +61,7 @@ exports.Game = function() {
 
 
   var askQuestion = function(){
-    if(currentCategory() == 'Pop')
-      console.log(popQuestions.shift());
-    if(currentCategory() == 'Science')
-      console.log(scienceQuestions.shift());
-    if(currentCategory() == 'Sports')
-      console.log(sportsQuestions.shift());
-    if(currentCategory() == 'Rock')
-      console.log(rockQuestions.shift());
+    console.log(questions[currentCategory()].shift());
   };
 
   this.roll = function(roll){
