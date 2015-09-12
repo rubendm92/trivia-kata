@@ -1,12 +1,12 @@
 exports = typeof window !== "undefined" && window !== null ? window : global;
 require('./QuestionFactory.js');
+require('./Player.js');
 
 exports.Game = function() {
   const pursesToWin = 6;
   const numberOfPlaces = 12;
   var players = [];
   var places = [];
-  var purses = [];
   var inPenaltyBox = [];
   var questions = questionFactory();
 
@@ -14,7 +14,7 @@ exports.Game = function() {
   var isGettingOutOfPenaltyBox = false;
 
   var didPlayerWin = function() {
-    return !(purses[currentPlayer] == pursesToWin)
+    return !(players[currentPlayer].purses() == pursesToWin)
   };
 
   var currentPlayerPosition = function() {
@@ -27,7 +27,7 @@ exports.Game = function() {
 
   var printQuestionWasCorrectlyAnswer = function() {
     console.log("Answer was correct!!!!");
-    console.log(players[currentPlayer] + " now has " + purses[currentPlayer]++  + " Gold Coins.");
+    console.log(players[currentPlayer].name() + " now has " + players[currentPlayer].purses()  + " Gold Coins.");
   };
 
   var canGetOutOfPenaltyBox = function(roll) {
@@ -36,12 +36,12 @@ exports.Game = function() {
 
   var leavePenaltyBox = function() {
     isGettingOutOfPenaltyBox = true;
-    console.log(players[currentPlayer] + " is getting out of the penalty box");
+    console.log(players[currentPlayer].name() + " is getting out of the penalty box");
   };
 
   var updatePlayerPosition = function(roll) {
     places[currentPlayer] = (places[currentPlayer] + roll) % numberOfPlaces;
-    console.log(players[currentPlayer] + "'s new location is " + places[currentPlayer]);
+    console.log(players[currentPlayer].name() + "'s new location is " + places[currentPlayer]);
   };
 
   this.isPlayable = function(howManyPlayers) {
@@ -49,9 +49,8 @@ exports.Game = function() {
   };
 
   this.add = function(playerName) {
-    players.push(playerName);
+    players.push(player(playerName));
     places[this.howManyPlayers() - 1] = 0;
-    purses[this.howManyPlayers() - 1] = 0;
     inPenaltyBox[this.howManyPlayers() - 1] = false;
 
     console.log(playerName + " was added");
@@ -65,12 +64,12 @@ exports.Game = function() {
   };
 
   this.roll = function(roll) {
-    console.log(players[currentPlayer] + " is the current player");
+    console.log(players[currentPlayer].name() + " is the current player");
     console.log("They have rolled a " + roll);
 
     if(inPenaltyBox[currentPlayer]) {
       if(!canGetOutOfPenaltyBox(roll)) {
-        console.log(players[currentPlayer] + " is not getting out of the penalty box");
+        console.log(players[currentPlayer].name() + " is not getting out of the penalty box");
         isGettingOutOfPenaltyBox = false;
         return;
       }else
@@ -85,6 +84,7 @@ exports.Game = function() {
       nextPlayer();
       return true;
     }
+    players[currentPlayer].gotOnePurse();
     printQuestionWasCorrectlyAnswer();
     var winner = didPlayerWin();
     nextPlayer();
@@ -93,7 +93,7 @@ exports.Game = function() {
 
   this.wrongAnswer = function() {
 		console.log('Question was incorrectly answered');
-		console.log(players[currentPlayer] + " was sent to the penalty box");
+		console.log(players[currentPlayer].name() + " was sent to the penalty box");
 		inPenaltyBox[currentPlayer] = true;
     nextPlayer();
 		return true;
