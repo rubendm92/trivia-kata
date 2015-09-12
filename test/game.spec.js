@@ -10,6 +10,7 @@ describe("An accepted trivia game", function() {
   });
 
   it("should return true when player answers question correctly but did not win the game", function() {
+    game.add("Ruben");
     expect(game.wasCorrectlyAnswered()).toBe(true);
   });
 
