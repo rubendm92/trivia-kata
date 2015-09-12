@@ -19,10 +19,12 @@ exports.player = function(name) {
 
   self.goToPenaltyBox = function() {
     isInPenaltyBox = true;
+    console.log(name + " was sent to the penalty box");
   }
 
   self.leavesPenaltyBox = function() {
     isInPenaltyBox = false;
+    console.log(name + " is getting out of the penalty box");
   }
 
   self.isInPenaltyBox = function() {

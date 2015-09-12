@@ -36,7 +36,6 @@ exports.Game = function() {
   var leavePenaltyBox = function() {
     isGettingOutOfPenaltyBox = true;
     players[currentPlayer].leavesPenaltyBox();
-    console.log(players[currentPlayer].name() + " is getting out of the penalty box");
   };
 
   var updatePlayerPosition = function(roll) {
@@ -92,7 +91,6 @@ exports.Game = function() {
 
   this.wrongAnswer = function() {
 		console.log('Question was incorrectly answered');
-		console.log(players[currentPlayer].name() + " was sent to the penalty box");
 		players[currentPlayer].goToPenaltyBox();
     nextPlayer();
 		return true;
