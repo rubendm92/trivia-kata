@@ -2,7 +2,8 @@ exports = typeof window !== "undefined" && window !== null ? window : global;
 
 exports.player = function(name) {
   var self = {},
-      purses = 0;
+      purses = 0,
+      isInPenaltyBox = false;
 
   self.name = function() {
     return name;
@@ -14,6 +15,18 @@ exports.player = function(name) {
 
   self.purses = function() {
     return purses;
+  }
+
+  self.goToPenaltyBox = function() {
+    isInPenaltyBox = true;
+  }
+
+  self.leavesPenaltyBox = function() {
+    isInPenaltyBox = false;
+  }
+
+  self.isInPenaltyBox = function() {
+    return isInPenaltyBox;
   }
 
   return self;

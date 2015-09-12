@@ -7,7 +7,6 @@ exports.Game = function() {
   const numberOfPlaces = 12;
   var players = [];
   var places = [];
-  var inPenaltyBox = [];
   var questions = questionFactory();
 
   var currentPlayer = 0;
@@ -36,6 +35,7 @@ exports.Game = function() {
 
   var leavePenaltyBox = function() {
     isGettingOutOfPenaltyBox = true;
+    players[currentPlayer].leavesPenaltyBox();
     console.log(players[currentPlayer].name() + " is getting out of the penalty box");
   };
 
@@ -51,7 +51,6 @@ exports.Game = function() {
   this.add = function(playerName) {
     players.push(player(playerName));
     places[this.howManyPlayers() - 1] = 0;
-    inPenaltyBox[this.howManyPlayers() - 1] = false;
 
     console.log(playerName + " was added");
     console.log("They are player number " + players.length);
@@ -67,7 +66,7 @@ exports.Game = function() {
     console.log(players[currentPlayer].name() + " is the current player");
     console.log("They have rolled a " + roll);
 
-    if(inPenaltyBox[currentPlayer]) {
+    if(players[currentPlayer].isInPenaltyBox()) {
       if(!canGetOutOfPenaltyBox(roll)) {
         console.log(players[currentPlayer].name() + " is not getting out of the penalty box");
         isGettingOutOfPenaltyBox = false;
@@ -80,7 +79,7 @@ exports.Game = function() {
   };
 
   this.wasCorrectlyAnswered = function() {
-    if(inPenaltyBox[currentPlayer] && !isGettingOutOfPenaltyBox) {
+    if(players[currentPlayer].isInPenaltyBox() && !isGettingOutOfPenaltyBox) {
       nextPlayer();
       return true;
     }
@@ -94,7 +93,7 @@ exports.Game = function() {
   this.wrongAnswer = function() {
 		console.log('Question was incorrectly answered');
 		console.log(players[currentPlayer].name() + " was sent to the penalty box");
-		inPenaltyBox[currentPlayer] = true;
+		players[currentPlayer].goToPenaltyBox();
     nextPlayer();
 		return true;
   };

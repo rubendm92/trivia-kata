@@ -14,4 +14,13 @@ describe("An accepted player", function() {
     p.gotOnePurse();
     expect(p.purses()).toBe(1);
   });
+
+  it("could go and leave penalty box", function () {
+    var p = player("Ruben");
+    expect(p.isInPenaltyBox()).toBe(false);
+    p.goToPenaltyBox();
+    expect(p.isInPenaltyBox()).toBe(true);
+    p.leavesPenaltyBox();
+    expect(p.isInPenaltyBox()).toBe(false);
+  });
 });
