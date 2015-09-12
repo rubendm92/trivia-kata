@@ -6,7 +6,6 @@ exports.Game = function() {
   const pursesToWin = 6;
   const numberOfPlaces = 12;
   var players = [];
-  var places = [];
   var questions = questionFactory();
 
   var currentPlayer = 0;
@@ -17,16 +16,11 @@ exports.Game = function() {
   };
 
   var currentPlayerPosition = function() {
-    return places[currentPlayer];
+    return players[currentPlayer].currentPlace();
   };
 
   var nextPlayer = function() {
     currentPlayer = (currentPlayer + 1) % players.length;
-  };
-
-  var printQuestionWasCorrectlyAnswer = function() {
-    console.log("Answer was correct!!!!");
-    console.log(players[currentPlayer].name() + " now has " + players[currentPlayer].purses()  + " Gold Coins.");
   };
 
   var canGetOutOfPenaltyBox = function(roll) {
@@ -39,8 +33,7 @@ exports.Game = function() {
   };
 
   var updatePlayerPosition = function(roll) {
-    places[currentPlayer] = (places[currentPlayer] + roll) % numberOfPlaces;
-    console.log(players[currentPlayer].name() + "'s new location is " + places[currentPlayer]);
+    players[currentPlayer].goTo((currentPlayerPosition() + roll) % numberOfPlaces);
   };
 
   this.isPlayable = function(howManyPlayers) {
@@ -49,7 +42,6 @@ exports.Game = function() {
 
   this.add = function(playerName) {
     players.push(player(playerName));
-    places[this.howManyPlayers() - 1] = 0;
 
     console.log(playerName + " was added");
     console.log("They are player number " + players.length);
@@ -83,7 +75,7 @@ exports.Game = function() {
       return true;
     }
     players[currentPlayer].gotOnePurse();
-    printQuestionWasCorrectlyAnswer();
+    console.log("Answer was correct!!!!");
     var winner = didPlayerWin();
     nextPlayer();
     return winner;
